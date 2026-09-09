@@ -43,8 +43,6 @@ Resolve capability aliases against the current catalog:
 - `balanced`: strong general model for complex implementation, debugging, and synthesis;
 - `economy`: lowest-cost adequate model for bounded, repeatable, read-heavy, or mechanically verifiable work.
 
-Current names are examples, not constants. In a catalog that contains them, Astra is usually the frontier tier, Sol the balanced high-capability tier, Terra the balanced latency/read-heavy tier, and Luna the economy tier. `Luna max` means Luna with max reasoning; it is not a separate model.
-
 ## Behavioral and harness fit
 
 Model choice is not a single intelligence ranking. When the task makes it

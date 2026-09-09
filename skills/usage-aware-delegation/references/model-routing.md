@@ -66,7 +66,7 @@ An explicit user model or effort choice is a hard preference subject to availabi
 
 The active conversation's model/effort cannot be changed by this skill. A child override is valid only when the native spawn surface accepts the exact fields and its current tool instructions permit them. If the tool inherits the parent, send the child with inherited settings and report `recommended` versus `observed` separately.
 
-`Luna max` is the Luna model with `max` reasoning. There is no implied separate “Luna Max” model. `Ultra` may include platform-managed delegation; automatic policy must not stack another layer on it.
+`Ultra` may include platform-managed delegation; automatic policy must not stack another layer on it.
 
 ## Source anchors
 

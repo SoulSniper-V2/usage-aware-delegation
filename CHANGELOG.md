@@ -2,6 +2,13 @@
 
 All notable changes to this skill are documented here.
 
+## 0.2.1 - 2026-09-09
+
+- Rewrote the README around installation, task routing, usage, and
+  verification.
+- Removed redundant model-name explanations from the public documentation and
+  skill references.
+
 ## 0.2.0 - 2026-09-09
 
 - Added behavioral and harness fit alongside ambiguity, coupling, consequence,

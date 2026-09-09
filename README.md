@@ -2,249 +2,179 @@
 
 [![Validate](https://github.com/SoulSniper-V2/usage-aware-delegation/actions/workflows/validate.yml/badge.svg)](https://github.com/SoulSniper-V2/usage-aware-delegation/actions/workflows/validate.yml)
 
-Route substantial Codex work between direct execution and bounded native sub-agents using model capability, reasoning effort, plan pressure, runtime capacity, and verification needs.
-
-This is a community-maintained Codex skill. It is a policy layer, not a new model, agent runner, quota meter, or replacement for user approval.
-
-## Why this exists
-
-Delegation is useful when a child has a genuinely independent objective, a better model fit, or safe parallel work. It is wasteful when a task is tiny, tightly coupled, approval-bound, or easier to finish directly.
-
-Usage-aware delegation gives Codex a repeatable decision policy:
-
-- keep questions, tiny edits, and tightly coupled sequences direct;
-- delegate only when model-fit or independent overlap repays startup and coordination cost;
-- resolve capability aliases against the models the current runtime actually exposes;
-- route by behavioral and harness fit, including instruction following, visual judgment, tool access, and verification ability;
-- choose reasoning effort from task evidence instead of treating max as a default;
-- reduce optional workers and reviews when observed plan pressure is high;
-- keep architecture, approvals, credentials, integration, conflicts, and final verification with the coordinator;
-- distinguish a recommended route from a child that was actually dispatched, observed, and verified.
-
-## Quick start
-
-After installation, start a new Codex turn or session so the skill catalog refreshes.
-
-Use it explicitly when you want to see the policy applied:
-
-    Use $usage-aware-delegation. Inspect this repository, then choose a direct or bounded delegated route. Keep the final integration and verification with me.
-
-It can also be invoked implicitly when the current Codex runtime honors the included agent metadata.
+A Codex skill for choosing between direct execution and bounded sub-agent work.
+It routes by task shape, available runtime capabilities, usage pressure, and
+the cost of verification.
 
 ## Install
 
-### Codex built-in installer
+### Codex
 
-From a Codex session, invoke the built-in $skill-installer skill and provide this GitHub tree URL:
+Use the built-in skill installer with:
 
     https://github.com/SoulSniper-V2/usage-aware-delegation/tree/main/skills/usage-aware-delegation
 
 ### GitHub CLI
 
-With a recent GitHub CLI that supports skills:
-
     gh skill install SoulSniper-V2/usage-aware-delegation usage-aware-delegation
 
 ### Skills CLI
 
-The Vercel Skills CLI can install the canonical skill directory for Codex:
-
     npx skills add SoulSniper-V2/usage-aware-delegation --skill usage-aware-delegation -a codex -g
 
-Use project scope instead of -g when the skill should live only in the current repository.
+Use project scope instead of -g when the skill should apply only to one
+repository.
 
-### Manual copy
-
-Clone the repository and copy the canonical skill directory into the configured Codex skills directory. If the installation uses a non-default CODEX_HOME, use that directory instead of ~/.codex.
+### Manual
 
     git clone https://github.com/SoulSniper-V2/usage-aware-delegation.git
     mkdir -p ~/.codex/skills
     cp -R usage-aware-delegation/skills/usage-aware-delegation ~/.codex/skills/usage-aware-delegation
 
-## How it routes work
+Start a new Codex turn after installation so the skill catalog refreshes.
 
-The policy evaluates the request in this order:
+## Use it
 
-1. Honor the user's explicit direct-work, model, effort, and delegation choices.
-2. Preserve safety, sandbox, approval, credential, privacy, and external-action boundaries.
-3. Follow repository instructions and custom-agent configuration.
-4. Observe the runtime's actual model catalog, supported efforts, native lifecycle tools, capacity, and usage signals.
-5. Apply task evidence and coordination economics.
-6. Use benchmarks and community reports only as supporting priors.
+Invoke it explicitly when you want the routing decision to be visible:
 
-The central gate is simple:
+    Use $usage-aware-delegation. Inspect this repository, choose the smallest reliable route, and keep final integration and verification with me.
 
-    Delegate only when model-fit or independent-overlap benefit clearly exceeds startup,
-    context transfer, supervision, aggregation, review, and likely rework cost.
+The skill can also be invoked implicitly when the current Codex runtime honors
+the included agent metadata.
 
-Direct tool/process concurrency is preferred for independent safe commands. Semantic dependencies, overlapping writes, builds, simulators, devices, approvals, Git mutations, deployments, uploads, submissions, messages, and other external effects remain serial.
+## How it works
 
-## Task fit and acceptance
+The policy follows this order:
 
-Model names are only capability priors. The skill also checks instruction
-following, long-task coherence, decomposition, visual taste, vision or
-computer-use access, source discipline, tool access, and verification quality.
-It evaluates those properties separately from the harness that supplies files,
-worktrees, tools, browsers, devices, approvals, and child lifecycle controls.
+1. Honor the user's direct-work, model, effort, and delegation choices.
+2. Preserve repository instructions, approvals, sandboxing, credentials, and
+   external-action boundaries.
+3. Inspect the runtime's available models, effort levels, sub-agent lifecycle,
+   capacity, tools, and usage signals when the decision matters.
+4. Classify the task and choose direct execution or bounded delegation.
+5. Inspect the returned artifact and run the acceptance checks.
 
-The focused [task-routing reference](skills/usage-aware-delegation/references/task-routing.md)
-maps common work shapes to evidence:
+The default decision is direct execution. Delegate only when a child has a
+self-contained objective, clear ownership, observable acceptance criteria, and
+a model-fit or independent-overlap benefit that outweighs coordination cost.
 
-- frontend/UI/3D work needs rendered browser or device inspection, not only a diff;
-- backend/API/security work needs contracts, error paths, and permission checks;
-- research/planning work needs a dated source ledger and explicit acceptance;
-- mechanical work should stay direct or use a bounded economy route;
-- orchestration needs child ownership, terminal events, aggregation, and final integration;
-- a stuck loop gets a fresh bounded takeover with preserved state, not a silent reset.
+## Direct or delegated?
 
-The matrix is a starting point, not a mandatory phase map. Direct execution wins
-when coordination cost exceeds model-fit or independent-overlap benefit.
+| Prefer direct execution when | Consider a child when |
+| --- | --- |
+| The task is a question, tiny edit, exact probe, or tightly coupled sequence | The child has one independent, bounded objective |
+| Work touches overlapping files or shared build/device state | The child is read-only or owns disjoint paths |
+| The next step depends on the current result | Parallel work has a clear aggregation step |
+| The action needs approval, credentials, deployment, or another external effect | A different capability or fresh review is likely to prevent expensive rework |
+| Startup and context transfer cost more than the side work | Runtime capacity and child lifecycle are observable |
 
-## Model and effort policy
+Direct tool or process concurrency comes before a second reasoning stream for
+independent, safe commands. Keep dependent work, overlapping writes, builds,
+approvals, and external actions serial.
 
-The skill uses capability aliases rather than hard-coding a model name:
+## Task routing
 
-| Alias | Use for | Current-family prior when available |
+Choose the route from the work, not from a fixed model recipe.
+
+| Work | Starting point | Acceptance evidence |
 | --- | --- | --- |
-| frontier | Ambiguity, novelty, high consequence, long coherent reasoning, or independent review | strongest available model, such as GPT-6 Astra |
-| balanced | Complex implementation, cross-file synthesis, debugging, and quality-sensitive normal work | strong general model, such as GPT-5.6 Sol |
-| economy | Bounded exploration, extraction, testing, and repeatable low-consequence work | fast lower-cost model, such as GPT-5.6 Luna |
+| Frontend, UI, design, 3D, or computer use | A model and harness with suitable visual or computer-use capability | Rendered browser/device inspection, interaction states, accessibility, and responsive behavior |
+| Backend, API, integration, or data work | A balanced route; stronger review for auth, security, payments, or destructive changes | Tests, contracts, error paths, permissions, retries, and integration behavior |
+| Research or planning | Direct or a bounded read-heavy sidecar | Dated sources, contradictions, assumptions, and explicit plan acceptance |
+| Mechanical or repeatable work | Direct or a bounded low-cost route | Exact diff, focused test, formatter, or inventory result |
+| Unknown cross-system debugging | A bounded investigation with enough reasoning depth for the coupling | Reproduction, root-cause evidence, and a regression check where possible |
+| Independent review | Fresh, read-only context when risk justifies it | Findings tied to behavior or paths, severity, and supporting evidence |
+| Orchestration | A runtime with observable child lifecycle and a coordinator that owns integration | Child contracts, ownership, terminal state, aggregation, and final verification |
 
-GPT-5.6 Terra is a useful latency/read-heavy option when the runtime exposes it. These are routing priors, not promises that a model is available or entitled on a particular plan. The skill resolves aliases against the live catalog and records the actual route when the runtime reports it.
+See [task-routing.md](skills/usage-aware-delegation/references/task-routing.md)
+for the full matrix and workflow patterns.
 
-Reasoning effort follows the smallest sufficient setting:
+## Usage and effort
 
-| Effort | Default use |
-| --- | --- |
-| low | Tiny work or an explicit speed/compatibility request |
-| medium | Meaningful bounded work and ordinary implementation |
-| high | Difficult, coupled, consequential, or verification-heavy work |
-| xhigh | Broad evidence coverage after the task boundary is sound |
-| max | Bounded deep work with deterministic verification and an accepted token/latency budget |
-| ultra | Never automatic; only when the user explicitly chooses the native runtime semantics |
+Usage pressure changes optional work before it changes safety requirements:
 
-Luna max means the Luna model with max reasoning effort. It is not a separate model.
+- ample capacity: use the normal benefit gate and a small amount of fan-out;
+- watch: prefer direct work, use at most one child for a clear benefit, and
+  skip optional review;
+- conserve: stay direct unless delegation avoids likely expensive failure;
+- exhausted: continue locally if possible and stop optional work;
+- unknown: assume conservative capacity and avoid quota claims.
 
-## Plan pressure
+Use the lowest effort that is sufficient for the task. Medium is the normal
+starting point; higher effort is for difficult, coupled, consequential, or
+verification-heavy work. Native Ultra is never selected automatically.
 
-Plan usage is shared and task-dependent. When a runtime exposes account-wide usage percentages, the skill treats them as a signal rather than a turn counter or token-to-quota formula:
+The skill does not predict turns from token counts. It records usage only when
+the runtime exposes a current read-only signal.
 
-| Pressure | Routing adjustment |
-| --- | --- |
-| ample | Normal benefit gate; up to two children when the work clearly repays it |
-| watch | Direct by default; one child for clear overlap or model fit; skip optional review |
-| conserve | Direct unless delegation avoids likely expensive failure; one narrow economy child at most |
-| exhausted | Continue locally if possible; stop optional work; never reset or purchase automatically |
-| unknown | Direct by default; one child maximum only with a strong benefit case |
+## Operating rules
 
-The skill never invents remaining turns, treats unknown usage as zero, or silently spends reset credits.
+- The coordinator owns intent, architecture, approvals, conflicts, integration,
+  and final verification.
+- Every child gets a bounded contract, exact scope, ownership, acceptance
+  checks, a validation budget, and a stop condition.
+- Children do not delegate recursively or write to overlapping paths.
+- A child report is not proof that its artifact or tests passed.
+- A missing dependency, permission, credential, or external service is not
+  evidence that a stronger model is needed.
+- A stuck loop gets a fresh, bounded takeover with the current state preserved.
+- A recommendation is reported separately from a dispatch that the runtime
+  actually accepted and observed.
 
-## Roles and lifecycle
+The runtime still controls model availability, effort support, child lifecycle,
+and external permissions. When it cannot provide evidence, the skill says so.
 
-Children receive a compact contract with:
-
-- one objective and exact scope;
-- read-only or disjoint ownership;
-- relevant context without a full transcript replay;
-- observable acceptance checks;
-- separate child-count, wall-time, token, and validation budgets;
-- a no-recursion rule and a stop condition.
-
-Supported roles are explorer, researcher, worker, tester, reviewer, and advisor. The coordinator inspects returned artifacts, changed paths, commands, exit codes, and terminal status. A child report is not proof that a patch or test passed.
-
-On a no-op or failure, the coordinator classifies the problem as scope, reasoning, verification, environment, permission, or authority failure. It narrows and retries at most once when that addresses the classified issue. It escalates model or effort only for demonstrated reasoning or verification failure; missing credentials or dependencies are not model evidence.
-
-## Safety boundaries
-
-This skill does not:
-
-- silently switch the active conversation's model or effort;
-- edit global Codex configuration as a hidden side effect;
-- bypass approvals, sandbox restrictions, credentials, or repository instructions;
-- retrieve or disclose passwords, cookies, API keys, MFA codes, or private session data;
-- purchase or redeem credits, reset quotas, or claim quota savings;
-- authorize a child to post, send, submit, deploy, upload, delete, or contact anyone without user authorization;
-- use a recommendation as proof of actual model execution;
-- allow recursive workers, overlapping writers, or an always-on companion by default.
-
-An explicit user choice wins when it is available and safe. If the runtime requires inherited child settings, the skill labels the choice as recommended rather than claiming an override was observed.
-
-## Routing notice and evidence levels
-
-When routing materially affects the task, the skill can emit a compact notice:
-
-    Routing: delegated | recommendation: exact-model/effort | observed: metadata or unavailable | reason: one sentence
-
-It distinguishes these states:
-
-| State | Meaning |
-| --- | --- |
-| recommended | The policy selected a route |
-| configured | A runtime or project setting supports it |
-| dispatched | The native tool accepted a child |
-| observed | Runtime returned model, effort, and terminal status |
-| verified | Artifact, scope, and acceptance checks passed |
-| blocked | Required capability, artifact, permission, or acceptance evidence is missing |
-
-## Repository layout
+## Package layout
 
     .
-    ├── skills/
-    │   └── usage-aware-delegation/
-    │       ├── SKILL.md
-    │       ├── agents/
-    │       │   └── openai.yaml
-    │       └── references/
-    │           ├── model-routing.md
-    │           ├── task-routing.md
-    │           └── usage-and-agents.md
-    ├── tests/
-    │   └── test_skill_contract.py
-    ├── .github/
-    │   └── workflows/
-    │       └── validate.yml
+    ├── skills/usage-aware-delegation/
+    │   ├── SKILL.md
+    │   ├── agents/openai.yaml
+    │   └── references/
+    │       ├── model-routing.md
+    │       ├── task-routing.md
+    │       └── usage-and-agents.md
+    ├── tests/test_skill_contract.py
+    ├── .github/workflows/validate.yml
     ├── CHANGELOG.md
     ├── CONTRIBUTING.md
-    ├── LICENSE
-    └── README.md
+    └── LICENSE
 
-The skill directory is the source of truth. The root README explains the package to humans; it is intentionally not duplicated inside the skill directory.
+The canonical skill lives under skills/usage-aware-delegation. The root README
+is for people; it is not duplicated inside the skill directory.
 
-## Validate locally
+## Validate
 
-The contract test uses only the Python standard library:
+The repository contract test uses only the Python standard library:
 
     python3 tests/test_skill_contract.py
 
-When the Codex skill creator is installed, also run its validator against the canonical directory:
+If the Codex skill creator is installed:
 
     python3 /path/to/codex/skills/.system/skill-creator/scripts/quick_validate.py skills/usage-aware-delegation
 
-For a clean contribution, check the patch itself:
+Also check the patch:
 
     git diff --check
 
+## References
+
+- [Sub-agents](https://learn.chatgpt.com/docs/agent-configuration/subagents)
+- [Plan usage](https://learn.chatgpt.com/docs/pricing)
+- [Reasoning effort](https://developers.openai.com/api/docs/guides/reasoning)
+- [Task routing reference](skills/usage-aware-delegation/references/task-routing.md)
+- [Model routing reference](skills/usage-aware-delegation/references/model-routing.md)
+- [Usage and lifecycle reference](skills/usage-aware-delegation/references/usage-and-agents.md)
+
+Model availability, plan behavior, and runtime schemas change. Re-check the
+current documentation before relying on a dated model or usage assumption.
+
 ## Contributing
 
-Read CONTRIBUTING.md before opening a pull request. Keep policy changes small and explain the evidence behind new routing rules. Model names, plan behavior, usage limits, and native tool schemas can change; verify current first-party documentation before turning a current model into a hard-coded requirement.
-
-Please preserve the distinction between:
-
-- a policy recommendation and an observed runtime route;
-- account-wide usage telemetry and this task's actual cost;
-- a benchmark or community report and a verified Codex result;
-- a missing dependency or permission and a model capability failure.
-
-## Versioning
-
-Releases use a lightweight semantic-versioning convention. Bump the version in CHANGELOG.md when the routing contract or installation surface changes, and describe any behavior that could change child count, model selection, effort, usage pressure, or external-action boundaries.
-
-## Current references
-
-The default policy is informed by the current Codex documentation for [sub-agents](https://learn.chatgpt.com/docs/agent-configuration/subagents), [plan pricing and usage](https://learn.chatgpt.com/docs/pricing), [reasoning effort](https://developers.openai.com/api/docs/guides/reasoning), and model references for [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra), [GPT-5.6 Sol](https://developers.openai.com/api/docs/models/gpt-5.6-sol), [GPT-5.6 Terra](https://developers.openai.com/api/docs/models/gpt-5.6-terra), and [GPT-5.6 Luna](https://developers.openai.com/api/docs/models/gpt-5.6-luna). Read [task-routing.md](skills/usage-aware-delegation/references/task-routing.md) for the task-specific acceptance matrix. Re-check those sources before relying on current availability, pricing, or limits.
-
-This project is not affiliated with or endorsed by OpenAI.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing the routing contract.
+Keep changes focused, explain the evidence behind new rules, and preserve the
+distinction between recommendations, observed execution, and verified results.
 
 ## License
 
-Released under the MIT License. See LICENSE.
+MIT. See [LICENSE](LICENSE).
