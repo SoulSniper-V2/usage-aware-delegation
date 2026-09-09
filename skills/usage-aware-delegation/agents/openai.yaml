@@ -1,0 +1,8 @@
+interface:
+  display_name: "Usage-aware delegation"
+  short_description: "Route Codex work by capability and usage"
+  brand_color: "#6D5EF8"
+  default_prompt: "Use $usage-aware-delegation to choose the most efficient direct or delegated Codex route for this task."
+
+policy:
+  allow_implicit_invocation: true
