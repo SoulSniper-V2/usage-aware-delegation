@@ -32,6 +32,8 @@ When routing could materially affect the task, and a read-only runtime/account q
 - exact available model IDs and each model's supported efforts;
 - native spawn, wait, follow-up, close/interrupt tools and reported concurrency;
 - plan tier and primary/weekly used percentages, if a connected read-only usage tool exposes them.
+- harness fit: available repository context, worktrees, tools, browser/device access,
+  artifact inspection, approvals, and observable child lifecycle, if exposed.
 
 Skip the query when it is unavailable, disallowed, or outside the user's scope, and record usage/capacity as `unknown`. Unknown is not zero usage, unlimited capacity, or proof that a model exists. Never infer current quota or actual model use from memory, internet benchmarks, a UI recommendation, or aggregate product-activity counts.
 
@@ -42,6 +44,28 @@ Resolve capability aliases against the current catalog:
 - `economy`: lowest-cost adequate model for bounded, repeatable, read-heavy, or mechanically verifiable work.
 
 Current names are examples, not constants. In a catalog that contains them, Astra is usually the frontier tier, Sol the balanced high-capability tier, Terra the balanced latency/read-heavy tier, and Luna the economy tier. `Luna max` means Luna with max reasoning; it is not a separate model.
+
+## Behavioral and harness fit
+
+Model choice is not a single intelligence ranking. When the task makes it
+material, assess instruction following, long-task coherence, decomposition and
+handoff quality, visual taste, vision/computer-use ability, tool selection,
+source discipline, verification quality, latency, and coordination cost.
+Treat public model opinions and benchmarks as priors until the current runtime
+or a controlled comparison supplies evidence.
+
+Evaluate the model separately from the harness. The harness determines which
+files, tools, browsers, devices, worktrees, instructions, approvals, child
+lifecycle controls, and verification surfaces are actually available. A
+strong model in an unsuitable harness is not a proven route; a smaller model
+with the right tools and a bounded objective may be the better route. Missing
+dependencies, permissions, credentials, or external authority are environment
+or authority failures, not evidence for a stronger model.
+
+Use the task-specific matrix and acceptance patterns in
+[task-routing.md](references/task-routing.md) for frontend/UI/3D, backend/API,
+research/planning, mechanical work, debugging, independent review, and
+orchestration. The matrix is a starting point, not a mandatory phase map.
 
 ## Usage pressure
 
@@ -59,7 +83,7 @@ Do not predict turns remaining. If before/after telemetry is available, report a
 
 ## Classify the task
 
-Assess these axes qualitatively: ambiguity, scope, coupling, verification difficulty, consequence, context burden, latency priority, and independent parallelism. Also identify read-only work, disjoint writes, shared mutable state, and external actions.
+Assess these axes qualitatively: ambiguity, scope, coupling, verification difficulty, consequence, context burden, latency priority, independent parallelism, instruction-following fit, long-task coherence, visual/taste or computer-use fit, tool/source fit, and verification fit. Also identify read-only work, disjoint writes, shared mutable state, and external actions.
 
 Keep work direct when it is a question, explanation, tiny edit, one-command probe, one-file mechanical change, tightly coupled sequence, overlapping write, shared build/device operation, approval-bound action, or a child would spend more time receiving and returning context than doing useful work.
 
@@ -130,7 +154,7 @@ Use only roles that pay for themselves:
 - `reviewer`: fresh-context, read-only independent review;
 - `advisor`: one focused higher-tier question for a likely blocker or high-consequence choice.
 
-Default to zero children for small work, one child for a material bounded sidecar, and at most two children under ample pressure. Reduce to one under watch/conserve and never exceed observed runtime capacity. If capacity is unknown, use one child maximum. Keep these budgets distinct: `child_count` limits concurrent/total children, `time_budget` limits the child's wall-clock attempt, `token_budget` is used only when the runtime exposes a real per-child budget, and `validation_budget` limits checks/recovery. Never invent token limits from plan percentages. Do not pre-create queues, permanent companions, or recursive workers. Leaves must not delegate.
+Default to zero children for small work, one child for a material bounded sidecar, and at most two children under ample pressure. Increase fan-out only when objectives and writes are disjoint, capacity and lifecycle are observable, pressure is acceptable, and the coordinator has an aggregation and verification step. Reduce to one under watch/conserve and never exceed observed runtime capacity. If capacity is unknown, use one child maximum. Keep these budgets distinct: `child_count` limits concurrent/total children, `time_budget` limits the child's wall-clock attempt, `token_budget` is used only when the runtime exposes a real per-child budget, and `validation_budget` limits checks/recovery. Never invent token limits from plan percentages. Do not pre-create queues, permanent companions, or recursive workers. Leaves must not delegate.
 
 ## Child capsule
 
@@ -161,7 +185,7 @@ Use fresh context for independent review. Require explorers and researchers to a
 5. Inspect the returned artifact, actual changed paths, terminal status, commands, and acceptance evidence.
 6. On a no-op or failure, classify it as scope, reasoning, verification, environment, permission, or authority failure. Narrow and retry once only when that addresses the classified issue.
 7. Escalate model/effort only for a demonstrated reasoning or verification failure. Carry the failed check into the next capsule.
-8. Stop optional children after required acceptance is proven. Refresh status before final response and close/interrupt genuinely running optional children using the available lifecycle tool. Do not claim completed history was deleted.
+8. Stop optional children after required acceptance is proven. For a stuck loop, preserve the current state, classify the failure, and use one bounded fresh takeover before escalating model or effort. Refresh lifecycle state and inspect artifacts; a quiet token stream is not proof of failure and a progress message is not proof of completion. Close/interrupt genuinely running optional children using the available lifecycle tool. Do not claim completed history was deleted.
 
 Never start a second writer on unresolved overlapping paths. Preserve normal approval and sandbox boundaries. A child cannot expand authorization because it has a tool.
 
@@ -173,4 +197,9 @@ When routing matters, keep the notice compact:
 
 At completion, report the actual route, evidence level, acceptance checks, usage evidence, and remaining uncertainty. Do not claim quota savings, speedup, quality improvement, a model switch, or successful cleanup without corresponding evidence.
 
-For deeper task-specific routing, read [model-routing.md](references/model-routing.md). For usage measurement, coordination economics, and lifecycle details, read [usage-and-agents.md](references/usage-and-agents.md).
+If behavioral fit or harness access changed the route, name that factor and
+the acceptance evidence it requires. For a UI route, this may be a rendered
+browser/device check; for backend work, contracts and error paths; for research,
+a dated source ledger; for orchestration, terminal child state and ownership.
+
+For deeper task-specific routing, read [model-routing.md](references/model-routing.md) and [task-routing.md](references/task-routing.md). For usage measurement, coordination economics, and lifecycle details, read [usage-and-agents.md](references/usage-and-agents.md).

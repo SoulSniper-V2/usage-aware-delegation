@@ -28,6 +28,7 @@ def main() -> int:
         SKILL / "SKILL.md",
         SKILL / "agents" / "openai.yaml",
         SKILL / "references" / "model-routing.md",
+        SKILL / "references" / "task-routing.md",
         SKILL / "references" / "usage-and-agents.md",
     ]
     for path in required:
@@ -67,6 +68,16 @@ def main() -> int:
     check("/Users/" not in skill_text, "SKILL.md must not contain a machine-specific /Users path", failures)
     check("credential" in skill_text.lower(), "skill should state its credential boundary", failures)
     check("external actions" in skill_text.lower(), "skill should state its external-action boundary", failures)
+    check("Behavioral and harness fit" in skill_text, "skill should cover behavioral and harness fit", failures)
+    check("task-routing.md" in skill_text, "skill should link task-routing.md", failures)
+    task_text = (SKILL / "references" / "task-routing.md").read_text(encoding="utf-8") if (SKILL / "references" / "task-routing.md").is_file() else ""
+    for phrase in (
+        "Model versus harness",
+        "Task-shape matrix",
+        "Stuck-loop fresh takeover",
+        "completion events",
+    ):
+        check(phrase.lower() in task_text.lower(), f"task-routing.md missing required concept: {phrase}", failures)
 
     if failures:
         for failure in failures:

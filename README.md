@@ -15,6 +15,7 @@ Usage-aware delegation gives Codex a repeatable decision policy:
 - keep questions, tiny edits, and tightly coupled sequences direct;
 - delegate only when model-fit or independent overlap repays startup and coordination cost;
 - resolve capability aliases against the models the current runtime actually exposes;
+- route by behavioral and harness fit, including instruction following, visual judgment, tool access, and verification ability;
 - choose reasoning effort from task evidence instead of treating max as a default;
 - reduce optional workers and reviews when observed plan pressure is high;
 - keep architecture, approvals, credentials, integration, conflicts, and final verification with the coordinator;
@@ -77,6 +78,27 @@ The central gate is simple:
     context transfer, supervision, aggregation, review, and likely rework cost.
 
 Direct tool/process concurrency is preferred for independent safe commands. Semantic dependencies, overlapping writes, builds, simulators, devices, approvals, Git mutations, deployments, uploads, submissions, messages, and other external effects remain serial.
+
+## Task fit and acceptance
+
+Model names are only capability priors. The skill also checks instruction
+following, long-task coherence, decomposition, visual taste, vision or
+computer-use access, source discipline, tool access, and verification quality.
+It evaluates those properties separately from the harness that supplies files,
+worktrees, tools, browsers, devices, approvals, and child lifecycle controls.
+
+The focused [task-routing reference](skills/usage-aware-delegation/references/task-routing.md)
+maps common work shapes to evidence:
+
+- frontend/UI/3D work needs rendered browser or device inspection, not only a diff;
+- backend/API/security work needs contracts, error paths, and permission checks;
+- research/planning work needs a dated source ledger and explicit acceptance;
+- mechanical work should stay direct or use a bounded economy route;
+- orchestration needs child ownership, terminal events, aggregation, and final integration;
+- a stuck loop gets a fresh bounded takeover with preserved state, not a silent reset.
+
+The matrix is a starting point, not a mandatory phase map. Direct execution wins
+when coordination cost exceeds model-fit or independent-overlap benefit.
 
 ## Model and effort policy
 
@@ -174,6 +196,7 @@ It distinguishes these states:
     │       │   └── openai.yaml
     │       └── references/
     │           ├── model-routing.md
+    │           ├── task-routing.md
     │           └── usage-and-agents.md
     ├── tests/
     │   └── test_skill_contract.py
@@ -218,7 +241,7 @@ Releases use a lightweight semantic-versioning convention. Bump the version in C
 
 ## Current references
 
-The default policy is informed by the current Codex documentation for [sub-agents](https://learn.chatgpt.com/docs/agent-configuration/subagents), [plan pricing and usage](https://learn.chatgpt.com/docs/pricing), [reasoning effort](https://developers.openai.com/api/docs/guides/reasoning), and model references for [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra), [GPT-5.6 Sol](https://developers.openai.com/api/docs/models/gpt-5.6-sol), [GPT-5.6 Terra](https://developers.openai.com/api/docs/models/gpt-5.6-terra), and [GPT-5.6 Luna](https://developers.openai.com/api/docs/models/gpt-5.6-luna). Re-check those sources before relying on current availability, pricing, or limits.
+The default policy is informed by the current Codex documentation for [sub-agents](https://learn.chatgpt.com/docs/agent-configuration/subagents), [plan pricing and usage](https://learn.chatgpt.com/docs/pricing), [reasoning effort](https://developers.openai.com/api/docs/guides/reasoning), and model references for [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra), [GPT-5.6 Sol](https://developers.openai.com/api/docs/models/gpt-5.6-sol), [GPT-5.6 Terra](https://developers.openai.com/api/docs/models/gpt-5.6-terra), and [GPT-5.6 Luna](https://developers.openai.com/api/docs/models/gpt-5.6-luna). Read [task-routing.md](skills/usage-aware-delegation/references/task-routing.md) for the task-specific acceptance matrix. Re-check those sources before relying on current availability, pricing, or limits.
 
 This project is not affiliated with or endorsed by OpenAI.
 
